@@ -1,0 +1,11 @@
+# C++
+*.o
+GaborFilter
+
+# LaTeX
+*.synctex.gz
+*.out
+*.aux
+*.log
+*.pdf
+.*.lb
