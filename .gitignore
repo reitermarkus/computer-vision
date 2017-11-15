@@ -1,6 +1,7 @@
 # C++
 *.o
 GaborFilter
+Pyramid
 
 # LaTeX
 *.synctex.gz

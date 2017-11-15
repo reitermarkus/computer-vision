@@ -22,7 +22,7 @@ int main(int argc, char **argv) {
     return EXIT_FAILURE;
   }
 
-  // Reads a jpg image and converts it to grayscale
+  // Reads a jpg image and converts it to grayscale.
   Mat image = imread(argv[1], 0);
   image.convertTo(image, CV_32F);
 

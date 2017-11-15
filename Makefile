@@ -1,4 +1,4 @@
-TARGET = GaborFilter
+TARGETS = GaborFilter Pyramid
 
 OBJ = $(patsubst %.cpp, %.o, $(wildcard *.cpp))
 
@@ -12,9 +12,9 @@ ifeq ($(shell ccache -V &>/dev/null; echo $$?), 0)
 endif
 
 # Rules
-all: $(TARGET)
+all: $(TARGETS)
 
-$(TARGET): $(OBJ)
+$(TARGETS): % : %.o
 	$(CXX) $(CXXFLAGS) $(LDFLAGS) $^ -o $@
 
 %.o: %.cpp
@@ -25,4 +25,5 @@ clean:
 	$(RM) $(TARGET) *.o
 
 run: all
-	time ./$(TARGET)
+	./GaborFilter you.jpg
+	./Pyramid you.jpg
