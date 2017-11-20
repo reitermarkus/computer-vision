@@ -22,7 +22,7 @@ $(TARGETS): % : %.o
 
 .PHONEY: clean
 clean:
-	$(RM) $(TARGET) *.o
+	$(RM) $(TARGETS) *.o
 
 run: all
 	./GaborFilter you.jpg
