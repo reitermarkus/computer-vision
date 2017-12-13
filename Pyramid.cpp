@@ -28,6 +28,7 @@ int main(int argc, char **argv) {
 
   foreground();
 
+  // Use built-in Gaussian kernel.
   Mat gaussian_kernel = getGaussianKernel(2, -1);
 
   Mat current_image;
