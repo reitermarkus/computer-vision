@@ -8,5 +8,6 @@ while hasFrame(video)
 end
 
 result = energyOfGabor(frames, 9, 5, pi / 6);
+% result = nineTap(frames);
 
 implay(result);
