@@ -7,7 +7,7 @@
 
 function [g_even g_odd] = gaborFilter(n, sigma_y, sigma_x, theta, pr, x0, y0)
 
-  if length(n) > 1,
+  if length(n) > 1
     incx = 2 * n / (n(1) - 1);
     incy = 2 * n / (n(2) - 1);
   else

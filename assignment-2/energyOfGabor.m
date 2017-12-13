@@ -3,20 +3,19 @@ function energy = energyOfGabor(video, gabor_size, sigma, theta)
   
   frames = [];
   
-  frameNumber = size(video);
-    
-  for i = 1 : frameNumber(3)
-    image = squeeze(video(:,:,i));
+  video = permute(video, [1, 3, 2]);
+  
+  for row = 1 : size(video, 3)
+    image = squeeze(video(:, :, row));
         
     image_even = conv2(double(image), g_even, 'same');
     image_odd = conv2(double(image), g_odd, 'same');
     
     frame = sqrt(image_even.^2 + image_odd.^2);
     frame = im2uint8(frame);
-
     
     frames = cat(3, frames, frame); 
   end
-  
-  energy = frames;
+    
+  energy = permute(frames, [1, 3, 2]);
 end

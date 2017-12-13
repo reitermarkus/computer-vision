@@ -7,6 +7,6 @@ while hasFrame(video)
   frames = cat(3, frames, rgb2gray(frame));
 end
 
-result = detectMotion(frames, 9, 5, pi / 6);
+result = energyOfGabor(frames, 9, 5, pi / 6);
 
 implay(result);
