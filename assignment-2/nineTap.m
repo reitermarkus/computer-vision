@@ -25,4 +25,3 @@ function motion = nineTap(video)
 
   motion = permute(frames, [1, 3, 2]);
 end
-

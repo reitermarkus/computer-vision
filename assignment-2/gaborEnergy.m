@@ -1,5 +1,5 @@
-function energy = energyOfGabor(video, gabor_size, sigma, theta)
-  [g_even, g_odd] = gaborFilter(gabor_size, sigma, sigma, theta, 2, 0, 0);
+function energy = gaborEnergy(video, n, sigma_y, sigma_x, theta)
+  [g_even, g_odd] = gaborFilter(n, sigma_y, sigma_x, theta, 2, 0, 0);
 
   frames = [];
 
