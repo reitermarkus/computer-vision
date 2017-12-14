@@ -3,15 +3,13 @@ function energy = energyOfGabor(video, gabor_size, sigma, theta)
 
   frames = [];
 
-  video = permute(video, [1, 3, 2]);
+  for col = 1 : size(video, 2)
+    column = squeeze(video(:, col, :));
 
-  for row = 1 : size(video, 3)
-    image = squeeze(video(:, :, row));
+    column_even = conv2(column, g_even);
+    column_odd = conv2(column, g_odd);
 
-    image_even = conv2(double(image), g_even, 'same');
-    image_odd = conv2(double(image), g_odd, 'same');
-
-    frame = sqrt(image_even.^2 + image_odd.^2);
+    frame = sqrt(column_even.^2 + column_odd.^2);
 
     frames = cat(3, frames, frame);
   end

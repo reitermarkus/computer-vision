@@ -12,21 +12,17 @@ function motion = nineTap(video)
 
   frames = [];
 
-  video = permute(video, [1, 3, 2]);
+  for col = 1 : size(video, 2)
+    column = squeeze(video(:, col, :));
 
-  for row = 1 : size(video, 3)
-    image = squeeze(video(:, :, row));
+    column_1 = conv2(column, f1);
+    column_2 = conv2(column, f2);
 
-    image_1 = conv2(double(image), f1, 'same');
-    image_2 = conv2(double(image), f2, 'same');
-
-    frame = image_1 .* image_2;
+    frame = column_1 .* column_2;
 
     frames = cat(3, frames, frame);
   end
 
-  video = frames;
-
-  motion = permute(video, [1, 3, 2]);
+  motion = permute(frames, [1, 3, 2]);
 end
 
