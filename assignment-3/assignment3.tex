@@ -1,0 +1,59 @@
+\documentclass{article}
+\usepackage[T1]{fontenc}
+
+\usepackage[utf8]{inputenc}
+\usepackage[english]{babel}
+\usepackage{amsmath}
+\usepackage{upgreek}
+\usepackage{enumerate}
+\usepackage{pdfpages}
+\usepackage{graphicx}
+
+\usepackage{listings}
+\usepackage{color}
+
+\definecolor{dkgreen}{rgb}{0,0.6,0}
+\definecolor{gray}{rgb}{0.5,0.5,0.5}
+\definecolor{mauve}{rgb}{0.58,0,0.82}
+
+\lstset{frame=tb,
+	language=matlab,
+	aboveskip=3mm,
+	belowskip=3mm,
+	showstringspaces=false,
+	columns=flexible,
+	basicstyle={\small\ttfamily},
+	numbers=none,
+	numberstyle=\tiny\color{gray},
+	keywordstyle=\color{blue},
+	commentstyle=\color{dkgreen},
+	stringstyle=\color{mauve},
+	breaklines=true,
+	breakatwhitespace=true,
+	tabsize=3
+}
+
+\begin{document}
+	\title{Compter Vision Assignment 3}
+	\author{... (in cooperation with ...)}
+
+	\maketitle
+	\vspace{1cm}
+	
+	\section{Object recognition system}
+	\textbf{Steps to achieve object recognition:}\\
+	\newline
+	Object recognition consists of two basic blocks, training and detection.\\ 
+	For training, first of all a set of training-data, in our example images of faces and images of something else, needs to be collected. Since the pictures may differ in size, we need to scale them to the same size. Afterwards the features of the images need to be computed (HOG). Finally a machine needs to learn from the data (SVM).\\
+	For detection, iterating over the image, i.e. using a sliding window, and computing the features to classify them, will rise whether an image contains a face or not.\\
+	\newline
+	\textbf{The purpose of this assignment:}\\
+	\newline
+	The purpose of this assignment is to learn and understand the difficulties in object recognition based on developing such a system to classify whether a picture contains a face or not.
+	
+	
+	\newpage
+	\textbf{Code file face\_detection.m :}
+	\lstinputlisting{face_detection.m}
+	
+\end{document}
