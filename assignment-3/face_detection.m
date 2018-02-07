@@ -8,14 +8,18 @@ faces = read_images('./253.faces-easy-101');
 clutter = read_images('./257.clutter');
 disp('Done.');
 
-face_indices = randperm(430);
-clutter_indices = randperm(430);
+imin = 1;
+imax = min(length(faces), length(clutter));
+imid = imax / 2;
+
+face_indices = randperm(imax);
+clutter_indices = randperm(imax);
 
 disp('Picking samples …');
-training_faces = faces(:, face_indices(1:215));
-test_faces = faces(:, face_indices(216:430));
-training_clutter = clutter(:, clutter_indices(1:215));
-test_clutter = clutter(:, clutter_indices(216:430));
+training_faces = faces(:, face_indices(1:imid));
+test_faces = faces(:, face_indices((imid + 1):imax));
+training_clutter = clutter(:, clutter_indices(1:imid));
+test_clutter = clutter(:, clutter_indices((imid + 1):imax));
 disp('Done.');
 
 training_labels = [];
