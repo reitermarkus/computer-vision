@@ -22,13 +22,13 @@
 	\section{Object Recognition System}
 
 	\textbf{Steps to achieve object recognition:}\\
-	\newline
+  \\
 	Object recognition consists of two basic blocks, training and detection.\\ 
 	For training, first of all a set of training data, in our example images of faces and images of clutter, needs to be collected. Since the pictures may differ in size, we need to scale them to the same size. Afterwards the features of the images need to be computed, using either the Energy of Gabor, SIFT or HoG. Finally a machine needs to learn from the data (SVM).\\
 	For detection, iterating over the image, i.e. using a sliding window, and computing the features to classify them, will rise whether an image contains a face or not.\\
 	\newline
 	\textbf{The purpose of this assignment:}\\
-	\newline
+  \\
 	The purpose of this assignment is to learn and understand the difficulties in object recognition based on developing such a system to classify whether a picture contains a face or not. The hypothesis is that it is possible to recognize patterns looking at features from multiple images which have the same classification.
 
 	\newpage
@@ -74,10 +74,10 @@
 
   \section{Discussion}
 
-  \textbf{What did we learn?}
-
-  \textbf{How could the method be improved?}
-
+  \textbf{What did we learn?}\\
+  \\
+  \textbf{How could the method be improved?}\\
+  \\
   The method could possibly be improved by combining the features sets of different detection algorithms. Also, in this particular implementation using Octave, all images are read sequentially, which takes a lot of time. This could all be done in parallel, which would introduce a huge performance improvement.
 
   \newpage
