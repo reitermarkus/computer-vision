@@ -1,7 +1,7 @@
 pkg load image
 
-addpath('./imHistogram')
-addpath('./libsvm/matlab')
+addpath('./imHistogram');
+addpath('./libsvm/matlab');
 
 disp('Reading images …');
 faces = read_images('./253.faces-easy-101');
@@ -10,7 +10,7 @@ disp('Done.');
 
 imin = 1;
 imax = min(length(faces), length(clutter));
-imid = imax / 2;
+imid = floor(imax / 2);
 
 face_indices = randperm(imax);
 clutter_indices = randperm(imax);
