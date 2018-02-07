@@ -8,9 +8,14 @@ faces = read_images('./253.faces-easy-101');
 clutter = read_images('./257.clutter');
 disp('Done.');
 
-disp('Picking training samples …');
-training_faces = sample_images(faces, 225);
-training_clutter = sample_images(clutter, 225);
+face_indices = randperm(430);
+clutter_indices = randperm(430);
+
+disp('Picking samples …');
+training_faces = faces(:, face_indices(1:215));
+test_faces = faces(:, face_indices(216:430));
+training_clutter = clutter(:, clutter_indices(1:215));
+test_clutter = clutter(:, clutter_indices(216:430));
 disp('Done.');
 
 labels = [];
@@ -32,11 +37,6 @@ disp('Done.');
 
 disp('Training SVM …');
 model = svmtrain(double(labels), double(features));
-disp('Done.');
-
-disp('Picking test samples …');
-test_faces = sample_images(faces, 225);
-test_clutter = sample_images(clutter, 225);
 disp('Done.');
 
 labels = [];
