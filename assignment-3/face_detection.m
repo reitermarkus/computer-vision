@@ -1,24 +1,25 @@
 pkg load image
 
+addpath('./imHistogram')
+addpath('./libsvm/matlab')
+
 faces = read_images('./253.faces-easy-101');
 clutter = read_images('./257.clutter');
 
-length(faces)
-length(clutter)
+sample_faces = sample_images(faces, 225);
+sample_clutter = sample_images(clutter, 225);
 
-img = faces{2}
+labels = [];
+features = [];
 
-new_image = double(img) * 0;
-
-# Loop through theta 0° – 360°, in steps of 10°.
-for i = 0:35
-  theta = i * 10 * pi / 180
-
-  energy = energy_of_gabor(img, 15, 10, 10, theta, 2, 0, 0);
-
-  new_image = imadd(new_image, double(energy));
+for i = 1:length(sample_faces)
+  labels = [labels; 1]; # contains face
+  features = [features; gabor_features(sample_faces{i})];
 end
 
-new_image = normalize_image(new_image);
+for i = 1:length(sample_clutter)
+  labels = [labels; 0]; # does not contain face
+  features = [features; gabor_features(sample_clutter{i})];
+end
 
-imwrite(new_image, 'yolo.jpg');
+model = svmtrain(double(labels), double(features), [])
