@@ -1,59 +1,84 @@
+% !TEX TS-program = xelatex
 \documentclass{article}
 \usepackage[T1]{fontenc}
 
 \usepackage[utf8]{inputenc}
 \usepackage[english]{babel}
+\usepackage{textcomp}
 \usepackage{amsmath}
 \usepackage{upgreek}
 \usepackage{enumerate}
 \usepackage{pdfpages}
 \usepackage{graphicx}
-
-\usepackage{listings}
-\usepackage{color}
-
-\definecolor{dkgreen}{rgb}{0,0.6,0}
-\definecolor{gray}{rgb}{0.5,0.5,0.5}
-\definecolor{mauve}{rgb}{0.58,0,0.82}
-
-\lstset{frame=tb,
-	language=matlab,
-	aboveskip=3mm,
-	belowskip=3mm,
-	showstringspaces=false,
-	columns=flexible,
-	basicstyle={\small\ttfamily},
-	numbers=none,
-	numberstyle=\tiny\color{gray},
-	keywordstyle=\color{blue},
-	commentstyle=\color{dkgreen},
-	stringstyle=\color{mauve},
-	breaklines=true,
-	breakatwhitespace=true,
-	tabsize=3
-}
+\usepackage{hyperref}
 
 \begin{document}
-	\title{Compter Vision Assignment 3}
-	\author{... (in cooperation with ...)}
+	\title{Compter Vision - Assignment 3}
+	\author{Lukas Dötlinger \& Markus Reiter}
 
 	\maketitle
 	\vspace{1cm}
-	
-	\section{Object recognition system}
+
+	\section{Object Recognition System}
+
 	\textbf{Steps to achieve object recognition:}\\
 	\newline
 	Object recognition consists of two basic blocks, training and detection.\\ 
-	For training, first of all a set of training-data, in our example images of faces and images of something else, needs to be collected. Since the pictures may differ in size, we need to scale them to the same size. Afterwards the features of the images need to be computed (HOG). Finally a machine needs to learn from the data (SVM).\\
+	For training, first of all a set of training data, in our example images of faces and images of clutter, needs to be collected. Since the pictures may differ in size, we need to scale them to the same size. Afterwards the features of the images need to be computed, using either the Energy of Gabor, SIFT or HoG. Finally a machine needs to learn from the data (SVM).\\
 	For detection, iterating over the image, i.e. using a sliding window, and computing the features to classify them, will rise whether an image contains a face or not.\\
 	\newline
 	\textbf{The purpose of this assignment:}\\
 	\newline
-	The purpose of this assignment is to learn and understand the difficulties in object recognition based on developing such a system to classify whether a picture contains a face or not.
-	
-	
+	The purpose of this assignment is to learn and understand the difficulties in object recognition based on developing such a system to classify whether a picture contains a face or not. The hypothesis is that it is possible to recognize patterns looking at features from multiple images which have the same classification.
+
 	\newpage
-	\textbf{Code file face\_detection.m :}
-	\lstinputlisting{face_detection.m}
-	
+
+  \section{Implementation}
+
+  \subsection{Gabor}
+
+  In order to extract features using a Gabor filter, we used the Energy of Gabor at different orientations. We calculated the Energy of Gabor from 0\textdegree to 350\textdegree in steps of 10\textdegree, then summed all of them and normalized the resulting matrix.
+
+  Then, we used the \href{http://www.mathworks.com/matlabcentral/fileexchange/28681-imhistogram/content/imHistogram.m}{\texttt{imHistogram}} function to generate a histogram with 150 bins, which is our feature vector.
+
+
+  \subsection{SIFT}
+
+  To extract features using SIFT, we used the \texttt{cv.ORB().detectAndCompute} function provided by OpenCV. This returns an n-dimensional array of features, so we used the \texttt{kmeans} function, which is also provided by OpenCV, to calculate the mean value of all rows of the array, and afterwards generated a histogram from these values, again using 150 bins.
+
+  \subsection{HoG}
+
+  Extracting features using HoG was also done with OpenCV, which provides the \texttt{cv.HOGDescriptor().compute} function. This again returns an n-dimensional array of features, so we also used \texttt{kmeans} here, but we didn't need to create a histogram, because length of this array is always the same length if the input images have the same size, so we simply used this as our input for the SVM.
+
+  \newpage
+
+  \section{SVM}
+
+  As our Support Vector Machine, we used \texttt{libsvm}, which provides a \texttt{svmtraim} and a \texttt{svmpredict} function. We used our feature vectors to train the SVM with half of our images, choosen at random. We used two labels to distinguish between images containing faces (\texttt{1}) and images which do not contain faces (\texttt{0}). The feature vectors of the other half were passed to \texttt{svmpredict}. \texttt{svmpredict} outputs the accuracy of the predictions based on the labels provided.
+  \\
+  Here are the results for all three methods:
+  \\
+  \begin{center}
+    \begin{tabular}{|l|c|c|c|}
+      \hline
+       & \textbf{Gabor} & \textbf{SIFT} & \textbf{HoG} \\
+       \hline
+       Accuracy & 50\% & 77.5229\% & 50\% \\
+      \hline
+    \end{tabular}
+  \end{center}
+
+  As you can see from the results, SIFT is by far the most accurate of all three. Gabor and HoG are both only 50\% accurate, which is the same as chance, which is pretty bad. For Gabor, we tried changing the size of the histogram to 300, but this didn't have any effect and it stayed at 50\%.
+
+  \newpage
+
+  \section{Appendix}
+
+  \begin{enumerate}
+    \item The code for the assignment is included as an attachment.
+    \item To install OpenCV for use with Octave, you need to install the following library:\\
+          \url{https://github.com/kyamagu/mexopencv}
+    \item To install \texttt{libsvm} for use with Octave, follow the instructions here:\\
+          \url{https://www.scivision.co/matlab-octave-python-libsvm-install/}
+  \end{enumerate}
 \end{document}
