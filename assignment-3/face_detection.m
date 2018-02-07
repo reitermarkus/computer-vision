@@ -18,43 +18,43 @@ training_clutter = clutter(:, clutter_indices(1:215));
 test_clutter = clutter(:, clutter_indices(216:430));
 disp('Done.');
 
-labels = [];
-features = [];
+training_labels = [];
+training_features = [];
 
 disp('Generating training face features …');
 for i = 1:length(training_faces)
-  labels = [labels; 1]; # contains face
-  features = [features; gabor_features(training_faces{i})];
+  training_labels = [training_labels; 1]; # contains face
+  training_features = [training_features; gabor_features(training_faces{i})];
 end
 disp('Done.');
 
 disp('Generating training clutter features …');
 for i = 1:length(training_clutter)
-  labels = [labels; 0]; # does not contain face
-  features = [features; gabor_features(training_clutter{i})];
+  training_labels = [training_labels; 0]; # does not contain face
+  training_features = [training_features; gabor_features(training_clutter{i})];
 end
 disp('Done.');
 
 disp('Training SVM …');
-model = svmtrain(double(labels), double(features));
+model = svmtrain(double(training_labels), double(training_features));
 disp('Done.');
 
-labels = [];
-features = [];
+test_labels = [];
+test_features = [];
 
 disp('Generating test face features …');
 for i = 1:length(test_faces)
-  labels = [labels; 1];
-  features = [features; gabor_features(test_faces{i})];
+  test_labels = [test_labels; 1];
+  test_features = [test_features; gabor_features(test_faces{i})];
 end
 disp('Done.');
 
 disp('Generating test clutter features …');
 for i = 1:length(test_clutter)
-  labels = [labels; 0];
-  features = [features; gabor_features(test_clutter{i})];
+  test_labels = [test_labels; 0];
+  test_features = [test_features; gabor_features(test_clutter{i})];
 end
 disp('Done.');
 
 disp('SVM is predicting labels …');
-predicted_labels = svmpredict(double(labels), double(features), model);
+predicted_labels = svmpredict(double(test_labels), double(test_features), model);
